@@ -1,0 +1,17 @@
+C:\WebAPI\FundooNotesAPI\RepositoryLayer\bin\Debug\net8.0\RepositoryLayer.deps.json
+C:\WebAPI\FundooNotesAPI\RepositoryLayer\bin\Debug\net8.0\RepositoryLayer.runtimeconfig.json
+C:\WebAPI\FundooNotesAPI\RepositoryLayer\bin\Debug\net8.0\RepositoryLayer.dll
+C:\WebAPI\FundooNotesAPI\RepositoryLayer\bin\Debug\net8.0\RepositoryLayer.pdb
+C:\WebAPI\FundooNotesAPI\RepositoryLayer\bin\Debug\net8.0\CommonLayer.dll
+C:\WebAPI\FundooNotesAPI\RepositoryLayer\bin\Debug\net8.0\CommonLayer.pdb
+C:\WebAPI\FundooNotesAPI\RepositoryLayer\obj\Debug\net8.0\RepositoryLayer.csproj.AssemblyReference.cache
+C:\WebAPI\FundooNotesAPI\RepositoryLayer\obj\Debug\net8.0\RepositoryLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\WebAPI\FundooNotesAPI\RepositoryLayer\obj\Debug\net8.0\RepositoryLayer.AssemblyInfoInputs.cache
+C:\WebAPI\FundooNotesAPI\RepositoryLayer\obj\Debug\net8.0\RepositoryLayer.AssemblyInfo.cs
+C:\WebAPI\FundooNotesAPI\RepositoryLayer\obj\Debug\net8.0\RepositoryLayer.csproj.CoreCompileInputs.cache
+C:\WebAPI\FundooNotesAPI\RepositoryLayer\obj\Debug\net8.0\RepositoryLayer.csproj.CopyComplete
+C:\WebAPI\FundooNotesAPI\RepositoryLayer\obj\Debug\net8.0\RepositoryLayer.dll
+C:\WebAPI\FundooNotesAPI\RepositoryLayer\obj\Debug\net8.0\refint\RepositoryLayer.dll
+C:\WebAPI\FundooNotesAPI\RepositoryLayer\obj\Debug\net8.0\RepositoryLayer.pdb
+C:\WebAPI\FundooNotesAPI\RepositoryLayer\obj\Debug\net8.0\RepositoryLayer.genruntimeconfig.cache
+C:\WebAPI\FundooNotesAPI\RepositoryLayer\obj\Debug\net8.0\ref\RepositoryLayer.dll

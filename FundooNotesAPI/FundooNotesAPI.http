@@ -1,0 +1,6 @@
+@FundooNotesAPI_HostAddress = http://localhost:5217
+
+GET {{FundooNotesAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
