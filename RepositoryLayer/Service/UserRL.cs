@@ -1,5 +1,8 @@
 ﻿using System.Text.RegularExpressions;
 using CommonLayer.Model;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using RepositoryLayer.Entitys;
 using RepositoryLayer.Innterface;
 
 namespace RepositoryLayer.Service
@@ -67,6 +70,9 @@ namespace RepositoryLayer.Service
             return true;
         }
 
+        [HttpPost("AddNote")]
+        [Authorize]
+       
         private void ValidateEmail(string email)
         {
             string regexPattern = @"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";

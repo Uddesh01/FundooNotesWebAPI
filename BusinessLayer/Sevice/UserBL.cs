@@ -1,6 +1,6 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Model;
-using RepositoryLayer;
+using RepositoryLayer.Entitys;
 using RepositoryLayer.Innterface;
 
 namespace BusinessLayer.Sevice
@@ -27,7 +27,6 @@ namespace BusinessLayer.Sevice
         public bool ResetPassword(string userEmail, string newPassword)
         {
             return iuserRL.ResetPassword(userEmail, newPassword);
-        }
-
+        }  
     }
 }

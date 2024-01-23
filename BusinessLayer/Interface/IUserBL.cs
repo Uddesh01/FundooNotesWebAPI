@@ -1,5 +1,5 @@
 ﻿using CommonLayer.Model;
-using RepositoryLayer;
+using RepositoryLayer.Entitys;
 
 namespace BusinessLayer.Interface
 {

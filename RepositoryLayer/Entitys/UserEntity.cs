@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace RepositoryLayer
+namespace RepositoryLayer.Entitys
 {
     public class UserEntity
     {
@@ -13,5 +13,4 @@ namespace RepositoryLayer
         public DateTime AddedOn { get; set; }
         public DateTime UpdatedOn { get; set; }
     }
-
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using RepositoryLayer.Entitys;
 
 namespace RepositoryLayer
 {
@@ -6,6 +7,7 @@ namespace RepositoryLayer
     {
         public FundooNotesDBContext(DbContextOptions dbContextOptions) : base(dbContextOptions) { }
         public DbSet<UserEntity> Users { get; set; }
+        public DbSet<NoteEntity> Notes { get; set; }
 
     }
 }

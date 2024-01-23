@@ -12,3 +12,4 @@ C:\WebAPI\FundooNotesAPI\CommonLayer\obj\Debug\net8.0\refint\CommonLayer.dll
 C:\WebAPI\FundooNotesAPI\CommonLayer\obj\Debug\net8.0\CommonLayer.pdb
 C:\WebAPI\FundooNotesAPI\CommonLayer\obj\Debug\net8.0\CommonLayer.genruntimeconfig.cache
 C:\WebAPI\FundooNotesAPI\CommonLayer\obj\Debug\net8.0\ref\CommonLayer.dll
+C:\WebAPI\FundooNotesAPI\CommonLayer\obj\Debug\net8.0\CommonLayer.sourcelink.json

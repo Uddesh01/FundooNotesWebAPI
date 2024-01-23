@@ -1,7 +1,13 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RepositoryLayer;
+using Microsoft.IdentityModel.Tokens;
+using RepositoryLayer.Entitys;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
+
 
 namespace FundooNotesAPI.Controllers
 {
@@ -11,18 +17,20 @@ namespace FundooNotesAPI.Controllers
     public class UserController : ControllerBase
     {
         public readonly IUserBL iuserBL;
-        public UserController(IUserBL userBL)
+        public IConfiguration configuration;
+
+        public UserController(IUserBL userBL, IConfiguration configuration)
         {
             iuserBL = userBL;
+            this.configuration = configuration;
         }
 
-        [HttpPost("register")]
+        [HttpPost("Register")]
         public ResponceModel<UserEntity> Register(UserModel newUser)
         {
             ResponceModel<UserEntity> responce = new ResponceModel<UserEntity>();
             try
             {
-
                 UserEntity userEntity = iuserBL.Register(newUser);
                 if (userEntity != null)
                 {
@@ -43,41 +51,91 @@ namespace FundooNotesAPI.Controllers
             return responce;
         }
 
-        [HttpPost("login")]
-        public IActionResult Login(LoginModel loginModel)
+        [HttpPost("Login")]
+        public ResponceModel<string> Login(LoginModel loginModel)
         {
-            try
-            {
-                iuserBL.Login(loginModel.UserEmail, loginModel.UserPassword);
-                return Ok();
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
-        }
+            ResponceModel<string> responce = new ResponceModel<string>();
 
-        [HttpPost("resetPassword")]
-        public IActionResult ResetPassword(ResetPasswordModel resetPasswordModel)
-        {
             try
             {
-                var passwordResetSuccessful = iuserBL.ResetPassword(resetPasswordModel.UserEmail, resetPasswordModel.NewPassword);
-                if (passwordResetSuccessful)
+                UserEntity userEntity = iuserBL.Login(loginModel.UserEmail, loginModel.UserPassword);
+
+                if (userEntity != null)
                 {
-                    return Ok();
+                    responce.Data = GenerateToken(userEntity);
+                    responce.Message = "Login successful";
                 }
                 else
                 {
-                    return BadRequest(new { Message = "Password reset failed." });
+                    responce.Message = "Login Unsuccessfull!!";
+                    responce.IsSuccess = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                responce.Message = ex.Message;
+                responce.IsSuccess = false;
+            }
+            return responce;
+        }
+
+        [HttpPost("ResetPassword")]
+        [Authorize]
+        public ResponceModel<string> ResetPassword(string password, string confirmPassword)
+        {
+            ResponceModel<string> responce = new ResponceModel<string>();
+            ResetPasswordModel resetPasswordModel = new ResetPasswordModel();
+            resetPasswordModel.NewPassword = password;
+            resetPasswordModel.ConfirmPassword = confirmPassword;
+            resetPasswordModel.UserEmail = User.FindFirstValue("Email").ToString();
+            try
+            {
+
+                if (resetPasswordModel.NewPassword == resetPasswordModel.ConfirmPassword)
+                {
+                    var passwordResetSuccessful = iuserBL.ResetPassword(resetPasswordModel.UserEmail, resetPasswordModel.NewPassword);
+                    if (passwordResetSuccessful)
+                    {
+                        responce.IsSuccess = true;
+                        responce.Message = "Password reset successfully!!";
+                    }
+                    else
+                    {
+                        responce.IsSuccess = false;
+                        responce.Message = "Password reset unsuccessfully!!";
+                    }
+                }
+                else
+                {
+                    responce.IsSuccess = false;
+                    responce.Message = "Password is not match. Check password!!";
                 }
 
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                responce.Message = ex.Message;
+                responce.IsSuccess = false;
             }
+            return responce;
         }
 
+        private string GenerateToken(UserEntity userEntity)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var claims = new[]
+            {
+                new Claim("Email",userEntity.UserEmail),
+                new Claim("UserId",userEntity.UserId.ToString())
+            };
+            var token = new JwtSecurityToken(configuration["Jwt:Issuer"],
+                configuration["Jwt:Audience"],
+                claims,
+                expires: DateTime.Now.AddMinutes(60),
+                signingCredentials: credentials);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
     }
 }

@@ -140,3 +140,5 @@ C:\WebAPI\FundooNotesAPI\FundooNotesAPI\obj\Debug\net8.0\refint\FundooNotesAPI.d
 C:\WebAPI\FundooNotesAPI\FundooNotesAPI\obj\Debug\net8.0\FundooNotesAPI.pdb
 C:\WebAPI\FundooNotesAPI\FundooNotesAPI\obj\Debug\net8.0\FundooNotesAPI.genruntimeconfig.cache
 C:\WebAPI\FundooNotesAPI\FundooNotesAPI\obj\Debug\net8.0\ref\FundooNotesAPI.dll
+C:\WebAPI\FundooNotesAPI\FundooNotesAPI\obj\Debug\net8.0\FundooNotesAPI.sourcelink.json
+C:\WebAPI\FundooNotesAPI\FundooNotesAPI\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

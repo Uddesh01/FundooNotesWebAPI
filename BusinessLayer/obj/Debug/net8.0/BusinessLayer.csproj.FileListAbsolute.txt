@@ -17,3 +17,4 @@ C:\WebAPI\FundooNotesAPI\BusinessLayer\obj\Debug\net8.0\refint\BusinessLayer.dll
 C:\WebAPI\FundooNotesAPI\BusinessLayer\obj\Debug\net8.0\BusinessLayer.pdb
 C:\WebAPI\FundooNotesAPI\BusinessLayer\obj\Debug\net8.0\BusinessLayer.genruntimeconfig.cache
 C:\WebAPI\FundooNotesAPI\BusinessLayer\obj\Debug\net8.0\ref\BusinessLayer.dll
+C:\WebAPI\FundooNotesAPI\BusinessLayer\obj\Debug\net8.0\BusinessLayer.sourcelink.json
