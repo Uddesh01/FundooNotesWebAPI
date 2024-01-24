@@ -8,6 +8,7 @@ namespace RepositoryLayer
         public FundooNotesDBContext(DbContextOptions dbContextOptions) : base(dbContextOptions) { }
         public DbSet<UserEntity> Users { get; set; }
         public DbSet<NoteEntity> Notes { get; set; }
+        public DbSet<LableEntity> Lables { get; set; }
 
     }
 }

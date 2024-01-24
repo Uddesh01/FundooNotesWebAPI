@@ -1,11 +1,7 @@
 ﻿using BusinessLayer.Interface;
 using CommonLayer.Model;
+using Microsoft.AspNetCore.Mvc;
 using RepositoryLayer.Entitys;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using RepositoryLayer.Innterface;
 
 namespace BusinessLayer.Sevice
@@ -22,14 +18,39 @@ namespace BusinessLayer.Sevice
             return inoteRL.AddNote(newNote, _userId);
         }
 
-        public bool DeleteNote(DeleteNoteModel deleteNoteModel)
+        public bool DeleteNote(long noteId,int _userId)
         {
-            return inoteRL.DeleteNote(deleteNoteModel);
+            return inoteRL.DeleteNote(noteId, _userId);
         }
 
-        NoteEntity INoteBL.EditNote(EditNoteModel newNote,int _userId)
+        bool INoteBL.Archive_UnArchive(int _userId, long noteId)
         {
-            return inoteRL.EditNote(newNote,_userId);
+            return inoteRL.Archive_UnArchive(_userId, noteId);
+        }
+
+        NoteEntity INoteBL.EditNote(EditNoteModel editNote, int _userId, long noteId)
+        {
+            return inoteRL.EditNote(editNote, _userId,noteId);
+        }
+
+        bool INoteBL.Pin_Unpin(int _userId, long noteId)
+        {
+            return inoteRL.Pin_Unpin(_userId,noteId);
+        }
+
+        bool INoteBL.Trash_UnTrash(int _userId, long noteId)
+        {
+            return inoteRL.Trash_UnTrash(_userId, noteId);
+        }
+
+        bool INoteBL.ChangeColor(int _userId, long noteId, string color)
+        {
+            return inoteRL.ChangeColor(_userId, noteId,color);
+        }
+
+        IEnumerable<NoteEntity> INoteBL.GetAllNotes(int _userId)
+        {
+            return inoteRL.GetAllNotes(_userId);
         }
     }
 }

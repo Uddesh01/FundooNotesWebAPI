@@ -1,32 +1,37 @@
-﻿using System.Text.RegularExpressions;
-using CommonLayer.Model;
+﻿using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using RepositoryLayer.Entitys;
 using RepositoryLayer.Innterface;
+using RepositoryLayer.JwtToke;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace RepositoryLayer.Service
 {
     public class UserRL : IUserRL
     {
         public readonly FundooNotesDBContext dbContext;
+        public IConfiguration configuration;
 
-        public UserRL(FundooNotesDBContext dbContext)
+        public UserRL(FundooNotesDBContext dbContext, IConfiguration configuration)
         {
             this.dbContext = dbContext;
+            this.configuration = configuration;
         }
 
         public UserEntity Register(UserModel newUser)
         {
             ValidateEmail(newUser.UserEmail);
             ValidatePassword(newUser.UserPassword);
-
+            byte[] encriptedPassword = Encoding.UTF8.GetBytes(newUser.UserPassword);
             var userEntity = new UserEntity
             {
                 UserName = newUser.UserName,
                 UserEmail = newUser.UserEmail,
-                UserPassword = newUser.UserPassword,
                 UserContact = newUser.UserContact,
+                UserPassword = Convert.ToBase64String(encriptedPassword),
                 AddedOn = DateTime.UtcNow,
                 UpdatedOn = DateTime.UtcNow
             };
@@ -37,24 +42,28 @@ namespace RepositoryLayer.Service
             return userEntity;
         }
 
-        public UserEntity Login(string userEmail, string userPassword)
+        public string Login(string userEmail, string userPassword)
         {
             ValidateEmail(userEmail);
             ValidatePassword(userPassword);
+            string encriptedPassword = Convert.ToBase64String(Encoding.UTF8.GetBytes(userPassword));
+            JwtToken token = new JwtToken(configuration);
 
-            var user = dbContext.Users.SingleOrDefault(u => u.UserEmail == userEmail && u.UserPassword == userPassword);
-            if (user == null)
+            var user = dbContext.Users.SingleOrDefault(u => u.UserEmail == userEmail && u.UserPassword == encriptedPassword);
+            if (user != null)
+            {
+                return token.GenerateToken(user);
+            }
+            else
             {
                 throw new InvalidOperationException("User not found");
             }
-            return user;
         }
 
         public bool ResetPassword(string userEmail, string newPassword)
         {
             ValidateEmail(userEmail);
             ValidatePassword(newPassword);
-
             var user = dbContext.Users.SingleOrDefault(u => u.UserEmail == userEmail);
 
             if (user == null)
@@ -72,7 +81,7 @@ namespace RepositoryLayer.Service
 
         [HttpPost("AddNote")]
         [Authorize]
-       
+
         private void ValidateEmail(string email)
         {
             string regexPattern = @"^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$";
@@ -89,5 +98,6 @@ namespace RepositoryLayer.Service
                 throw new ArgumentException("Invalid password format");
             }
         }
+
     }
 }

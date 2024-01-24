@@ -52,17 +52,18 @@ namespace FundooNotesAPI.Controllers
         }
 
         [HttpPost("Login")]
+
         public ResponceModel<string> Login(LoginModel loginModel)
         {
             ResponceModel<string> responce = new ResponceModel<string>();
 
             try
             {
-                UserEntity userEntity = iuserBL.Login(loginModel.UserEmail, loginModel.UserPassword);
+                string token = iuserBL.Login(loginModel.UserEmail, loginModel.UserPassword);
 
-                if (userEntity != null)
+                if (token != null)
                 {
-                    responce.Data = GenerateToken(userEntity);
+                    responce.Data = token;
                     responce.Message = "Login successful";
                 }
                 else
@@ -120,22 +121,6 @@ namespace FundooNotesAPI.Controllers
             return responce;
         }
 
-        private string GenerateToken(UserEntity userEntity)
-        {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Jwt:Key"]));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
-            var claims = new[]
-            {
-                new Claim("Email",userEntity.UserEmail),
-                new Claim("UserId",userEntity.UserId.ToString())
-            };
-            var token = new JwtSecurityToken(configuration["Jwt:Issuer"],
-                configuration["Jwt:Audience"],
-                claims,
-                expires: DateTime.Now.AddMinutes(60),
-                signingCredentials: credentials);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
+       
     }
 }

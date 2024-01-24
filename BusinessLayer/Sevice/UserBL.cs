@@ -19,7 +19,7 @@ namespace BusinessLayer.Sevice
             return iuserRL.Register(newUser);
         }
 
-        public UserEntity Login(string userEmail, string userPassword)
+        public string Login(string userEmail, string userPassword)
         {
             return iuserRL.Login(userEmail, userPassword);
         }
