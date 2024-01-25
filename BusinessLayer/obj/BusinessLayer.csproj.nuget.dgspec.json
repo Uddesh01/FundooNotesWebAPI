@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\WebAPI\\FundooNotesAPI\\BusinessLayer\\BusinessLayer.csproj": {}
+    "C:\\WebAPI\\FundooNotesWebAPI\\BusinessLayer\\BusinessLayer.csproj": {}
   },
   "projects": {
-    "C:\\WebAPI\\FundooNotesAPI\\BusinessLayer\\BusinessLayer.csproj": {
+    "C:\\WebAPI\\FundooNotesWebAPI\\BusinessLayer\\BusinessLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\WebAPI\\FundooNotesAPI\\BusinessLayer\\BusinessLayer.csproj",
+        "projectUniqueName": "C:\\WebAPI\\FundooNotesWebAPI\\BusinessLayer\\BusinessLayer.csproj",
         "projectName": "BusinessLayer",
-        "projectPath": "C:\\WebAPI\\FundooNotesAPI\\BusinessLayer\\BusinessLayer.csproj",
+        "projectPath": "C:\\WebAPI\\FundooNotesWebAPI\\BusinessLayer\\BusinessLayer.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\WebAPI\\FundooNotesAPI\\BusinessLayer\\obj\\",
+        "outputPath": "C:\\WebAPI\\FundooNotesWebAPI\\BusinessLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,8 +32,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\WebAPI\\FundooNotesAPI\\RepositoryLayer\\RepositoryLayer.csproj": {
-                "projectPath": "C:\\WebAPI\\FundooNotesAPI\\RepositoryLayer\\RepositoryLayer.csproj"
+              "C:\\WebAPI\\FundooNotesWebAPI\\RepositoryLayer\\RepositoryLayer.csproj": {
+                "projectPath": "C:\\WebAPI\\FundooNotesWebAPI\\RepositoryLayer\\RepositoryLayer.csproj"
               }
             }
           }
@@ -91,14 +91,14 @@
         }
       }
     },
-    "C:\\WebAPI\\FundooNotesAPI\\CommonLayer\\CommonLayer.csproj": {
+    "C:\\WebAPI\\FundooNotesWebAPI\\CommonLayer\\CommonLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\WebAPI\\FundooNotesAPI\\CommonLayer\\CommonLayer.csproj",
+        "projectUniqueName": "C:\\WebAPI\\FundooNotesWebAPI\\CommonLayer\\CommonLayer.csproj",
         "projectName": "CommonLayer",
-        "projectPath": "C:\\WebAPI\\FundooNotesAPI\\CommonLayer\\CommonLayer.csproj",
+        "projectPath": "C:\\WebAPI\\FundooNotesWebAPI\\CommonLayer\\CommonLayer.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\WebAPI\\FundooNotesAPI\\CommonLayer\\obj\\",
+        "outputPath": "C:\\WebAPI\\FundooNotesWebAPI\\CommonLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -174,14 +174,14 @@
         }
       }
     },
-    "C:\\WebAPI\\FundooNotesAPI\\RepositoryLayer\\RepositoryLayer.csproj": {
+    "C:\\WebAPI\\FundooNotesWebAPI\\RepositoryLayer\\RepositoryLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\WebAPI\\FundooNotesAPI\\RepositoryLayer\\RepositoryLayer.csproj",
+        "projectUniqueName": "C:\\WebAPI\\FundooNotesWebAPI\\RepositoryLayer\\RepositoryLayer.csproj",
         "projectName": "RepositoryLayer",
-        "projectPath": "C:\\WebAPI\\FundooNotesAPI\\RepositoryLayer\\RepositoryLayer.csproj",
+        "projectPath": "C:\\WebAPI\\FundooNotesWebAPI\\RepositoryLayer\\RepositoryLayer.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\WebAPI\\FundooNotesAPI\\RepositoryLayer\\obj\\",
+        "outputPath": "C:\\WebAPI\\FundooNotesWebAPI\\RepositoryLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -202,8 +202,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\WebAPI\\FundooNotesAPI\\CommonLayer\\CommonLayer.csproj": {
-                "projectPath": "C:\\WebAPI\\FundooNotesAPI\\CommonLayer\\CommonLayer.csproj"
+              "C:\\WebAPI\\FundooNotesWebAPI\\CommonLayer\\CommonLayer.csproj": {
+                "projectPath": "C:\\WebAPI\\FundooNotesWebAPI\\CommonLayer\\CommonLayer.csproj"
               }
             }
           }

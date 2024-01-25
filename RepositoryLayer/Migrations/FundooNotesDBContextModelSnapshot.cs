@@ -78,6 +78,9 @@ namespace RepositoryLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<long?>("LableEntityLableID")
+                        .HasColumnType("bigint");
+
                     b.Property<bool>("Pin")
                         .HasColumnType("bit");
 
@@ -96,9 +99,34 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("NoteID");
 
+                    b.HasIndex("LableEntityLableID");
+
                     b.HasIndex("UserId");
 
                     b.ToTable("Notes");
+                });
+
+            modelBuilder.Entity("RepositoryLayer.Entitys.NoteLabelEntity", b =>
+                {
+                    b.Property<long>("LabelNoteID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("LabelNoteID"));
+
+                    b.Property<long>("LabelID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("NoteID")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("LabelNoteID");
+
+                    b.HasIndex("LabelID");
+
+                    b.HasIndex("NoteID");
+
+                    b.ToTable("NoteLabelEntity");
                 });
 
             modelBuilder.Entity("RepositoryLayer.Entitys.UserEntity", b =>
@@ -157,6 +185,10 @@ namespace RepositoryLayer.Migrations
 
             modelBuilder.Entity("RepositoryLayer.Entitys.NoteEntity", b =>
                 {
+                    b.HasOne("RepositoryLayer.Entitys.LableEntity", null)
+                        .WithMany("NoteLabels")
+                        .HasForeignKey("LableEntityLableID");
+
                     b.HasOne("RepositoryLayer.Entitys.UserEntity", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -164,6 +196,35 @@ namespace RepositoryLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("RepositoryLayer.Entitys.NoteLabelEntity", b =>
+                {
+                    b.HasOne("RepositoryLayer.Entitys.LableEntity", "Label")
+                        .WithMany()
+                        .HasForeignKey("LabelID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("RepositoryLayer.Entitys.NoteEntity", "Note")
+                        .WithMany("NoteLabels")
+                        .HasForeignKey("NoteID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Label");
+
+                    b.Navigation("Note");
+                });
+
+            modelBuilder.Entity("RepositoryLayer.Entitys.LableEntity", b =>
+                {
+                    b.Navigation("NoteLabels");
+                });
+
+            modelBuilder.Entity("RepositoryLayer.Entitys.NoteEntity", b =>
+                {
+                    b.Navigation("NoteLabels");
                 });
 #pragma warning restore 612, 618
         }

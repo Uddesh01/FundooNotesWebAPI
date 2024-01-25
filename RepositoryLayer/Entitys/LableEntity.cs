@@ -10,14 +10,13 @@ namespace RepositoryLayer.Entitys
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long LableID { get; set; }
         public string LableName { get; set; }
-        [ForeignKey("Users")]
-        public int UserId { get; set; }
         [JsonIgnore]
         public virtual UserEntity User { get; set; }
         [ForeignKey("Notes")]
         public long NoteID { get; set; }
         [JsonIgnore]
         public virtual NoteEntity Note { get; set; }
+        public ICollection<NoteEntity> NoteLabels { get; set; }
 
     }
 }
