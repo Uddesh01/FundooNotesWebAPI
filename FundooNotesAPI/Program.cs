@@ -73,6 +73,8 @@ builder.Services.AddTransient<IUserRL, UserRL>();
 builder.Services.AddTransient<IUserBL, UserBL>();
 builder.Services.AddTransient<INoteRL, NoteRL>();
 builder.Services.AddTransient<INoteBL, NoteBL>();
+builder.Services.AddTransient <ILabelRL, LabelRL>();
+builder.Services.AddTransient<ILabelBL, LabelBL>();
 
 var app = builder.Build();
 

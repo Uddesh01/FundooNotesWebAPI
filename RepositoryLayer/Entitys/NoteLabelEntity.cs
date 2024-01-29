@@ -8,11 +8,9 @@ namespace RepositoryLayer.Entitys
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long LabelNoteID { get; set; }
-
         public long LabelID { get; set; }
-        public LableEntity Label { get; set; }
-
         public long NoteID { get; set; }
+        public LabelEntity Label { get; set; }
         public NoteEntity Note { get; set; }
     }
 }

@@ -22,29 +22,22 @@ namespace RepositoryLayer.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("RepositoryLayer.Entitys.LableEntity", b =>
+            modelBuilder.Entity("RepositoryLayer.Entitys.LabelEntity", b =>
                 {
-                    b.Property<long>("LableID")
+                    b.Property<long>("LabelID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("LableID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("LabelID"));
 
-                    b.Property<string>("LableName")
+                    b.Property<string>("LabelName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("NoteID")
                         .HasColumnType("bigint");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("LableID");
-
-                    b.HasIndex("NoteID");
-
-                    b.HasIndex("UserId");
+                    b.HasKey("LabelID");
 
                     b.ToTable("Lables");
                 });
@@ -78,9 +71,6 @@ namespace RepositoryLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long?>("LableEntityLableID")
-                        .HasColumnType("bigint");
-
                     b.Property<bool>("Pin")
                         .HasColumnType("bit");
 
@@ -98,10 +88,6 @@ namespace RepositoryLayer.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("NoteID");
-
-                    b.HasIndex("LableEntityLableID");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Notes");
                 });
@@ -126,7 +112,7 @@ namespace RepositoryLayer.Migrations
 
                     b.HasIndex("NoteID");
 
-                    b.ToTable("NoteLabelEntity");
+                    b.ToTable("NoteLabels");
                 });
 
             modelBuilder.Entity("RepositoryLayer.Entitys.UserEntity", b =>
@@ -164,44 +150,10 @@ namespace RepositoryLayer.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("RepositoryLayer.Entitys.LableEntity", b =>
-                {
-                    b.HasOne("RepositoryLayer.Entitys.NoteEntity", "Note")
-                        .WithMany()
-                        .HasForeignKey("NoteID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("RepositoryLayer.Entitys.UserEntity", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Note");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("RepositoryLayer.Entitys.NoteEntity", b =>
-                {
-                    b.HasOne("RepositoryLayer.Entitys.LableEntity", null)
-                        .WithMany("NoteLabels")
-                        .HasForeignKey("LableEntityLableID");
-
-                    b.HasOne("RepositoryLayer.Entitys.UserEntity", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
-                });
-
             modelBuilder.Entity("RepositoryLayer.Entitys.NoteLabelEntity", b =>
                 {
-                    b.HasOne("RepositoryLayer.Entitys.LableEntity", "Label")
-                        .WithMany()
+                    b.HasOne("RepositoryLayer.Entitys.LabelEntity", "Label")
+                        .WithMany("NoteLabels")
                         .HasForeignKey("LabelID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -217,7 +169,7 @@ namespace RepositoryLayer.Migrations
                     b.Navigation("Note");
                 });
 
-            modelBuilder.Entity("RepositoryLayer.Entitys.LableEntity", b =>
+            modelBuilder.Entity("RepositoryLayer.Entitys.LabelEntity", b =>
                 {
                     b.Navigation("NoteLabels");
                 });

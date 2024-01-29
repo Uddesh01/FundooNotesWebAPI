@@ -21,9 +21,6 @@ namespace RepositoryLayer.Entitys
         public DateTime Edited { get; set; }
         [ForeignKey("Users")]
         public int UserId { get; set; }
-        [JsonIgnore]    
-        public virtual UserEntity User { get; set; }
         public ICollection<NoteLabelEntity> NoteLabels { get; set; }
-
     }
 }

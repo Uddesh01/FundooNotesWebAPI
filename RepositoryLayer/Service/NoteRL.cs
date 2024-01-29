@@ -1,13 +1,7 @@
 ﻿using CommonLayer.Model;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
 using RepositoryLayer.Entitys;
 using RepositoryLayer.Innterface;
-using System.Drawing;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
-using System.Text;
 
 namespace RepositoryLayer.Service
 {
@@ -15,10 +9,9 @@ namespace RepositoryLayer.Service
     {
         public readonly FundooNotesDBContext dbContext;
         public IConfiguration configuration;
-        public NoteRL(FundooNotesDBContext dbContext, IConfiguration configuration)
+        public NoteRL(FundooNotesDBContext dbContext)
         {
             this.dbContext = dbContext;
-            this.configuration = configuration;
         }
         public NoteEntity AddNote(AddNoteModel newNote, int _userId)
         {
@@ -83,7 +76,7 @@ namespace RepositoryLayer.Service
 
         bool INoteRL.Pin_Unpin(int _userId, long noteId)
         {
-            NoteEntity noteEntity= dbContext.Notes.Where(x => x.NoteID == noteId && x.UserId == _userId).FirstOrDefault();
+            NoteEntity noteEntity = dbContext.Notes.Where(x => x.NoteID == noteId && x.UserId == _userId).FirstOrDefault();
             if (noteEntity != null)
             {
                 if (noteEntity.Pin == true)
@@ -125,12 +118,12 @@ namespace RepositoryLayer.Service
             return true;
         }
 
-        bool INoteRL.ChangeColor(int _userId, long noteId,string color)
+        public bool ChangeColor(int _userId, long noteId, string color)
         {
             NoteEntity noteEntity = dbContext.Notes.Where(x => x.NoteID == noteId && x.UserId == _userId).FirstOrDefault();
             if (noteEntity != null)
             {
-                noteEntity.Color=color;
+                noteEntity.Color = color;
             }
             else
             {
@@ -140,7 +133,7 @@ namespace RepositoryLayer.Service
             return true;
         }
 
-        IEnumerable<NoteEntity> INoteRL.GetAllNotes(int _userId)
+        public IEnumerable<NoteEntity> GetAllNotes(int _userId)
         {
             IEnumerable<NoteEntity> allNotes = dbContext.Notes.Where(x => x.UserId == _userId);
             if (allNotes != null)
@@ -151,7 +144,16 @@ namespace RepositoryLayer.Service
             {
                 throw new Exception("User or notes are not found!!");
             }
-            
+
+        }
+
+        public IEnumerable<NoteEntity> GetAllNotesByLabelName(long labelId, int userId)
+        {
+            var allNotes = from nl in dbContext.NoteLabels
+                           join n in dbContext.Notes on nl.NoteID equals n.NoteID
+                           where nl.LabelID == labelId && n.UserId == userId
+                           select n;
+            return allNotes;
         }
     }
 }

@@ -12,12 +12,9 @@ namespace FundooNotesAPI.Controllers
     public class NoteController : ControllerBase
     {
         public readonly INoteBL inoteBL;
-        public IConfiguration configuration;
-        public NoteController(INoteBL noteBL, IConfiguration configuration)
+        public NoteController(INoteBL noteBL)
         {
-
             inoteBL = noteBL;
-            this.configuration = configuration;
         }
 
         [HttpPost("AddNote")]
@@ -199,14 +196,14 @@ namespace FundooNotesAPI.Controllers
 
         [HttpPut("ChangeColor")]
         [Authorize]
-        public ResponceModel<NoteEntity> ChangeColor(long noteId,string color)
+        public ResponceModel<NoteEntity> ChangeColor(long noteId, string color)
         {
             string userId = User.FindFirstValue("UserId");
             int _userId = Convert.ToInt32(userId);
             ResponceModel<NoteEntity> responce = new ResponceModel<NoteEntity>();
             try
             {
-                bool isSuccess = inoteBL.ChangeColor(_userId, noteId,color);
+                bool isSuccess = inoteBL.ChangeColor(_userId, noteId, color);
                 if (isSuccess)
                 {
                     responce.IsSuccess = true;
@@ -228,26 +225,60 @@ namespace FundooNotesAPI.Controllers
 
         [HttpGet("GetAllNotes")]
         [Authorize]
-        public IActionResult GetAllNotes ()
+        public ResponceModel<IEnumerable<NoteEntity>> GetAllNotes()
         {
             int userId = Convert.ToInt32(User.FindFirstValue("UserId"));
-       
+            ResponceModel<IEnumerable<NoteEntity>> responce = new ResponceModel<IEnumerable<NoteEntity>>();
             try
             {
                 IEnumerable<NoteEntity> allNotes = inoteBL.GetAllNotes(userId);
                 if (allNotes != null)
                 {
-                    return Ok(new ResponceModel<IEnumerable<NoteEntity>> { IsSuccess= true, Message="Successfully get all data!!", Data=allNotes});
+                    responce.IsSuccess=true;
+                    responce.Message = "All notes are retrive successfully!!";
+                    responce.Data=allNotes;
                 }
                 else
                 {
-                    return BadRequest(new ResponceModel<string> { IsSuccess = false, Message = "UnSuccessfull for geting all data!!", Data = null });
+                    responce.IsSuccess = true;
+                    responce.Message = "Operation of retrive notes are unsuccessfull!!";
                 }
             }
             catch (Exception ex)
             {
-                throw ex;
-            }                    
+               responce.IsSuccess=false;
+                responce.Message = ex.Message;
+            }
+            return responce;
+        }
+
+        [HttpGet("GetAllNotesByLabelId")]
+        [Authorize]
+        public ResponceModel<IEnumerable<NoteEntity>> GetAllNotesByLabelId(long labelId)
+        {
+            int userId = Convert.ToInt32(User.FindFirstValue("UserId"));
+            ResponceModel<IEnumerable<NoteEntity>> responce = new ResponceModel<IEnumerable<NoteEntity>>();
+            try
+            {
+                IEnumerable<NoteEntity> allNotes = inoteBL.GetAllNotesByLabelName(labelId,userId);
+                if (allNotes != null)
+                {
+                    responce.IsSuccess= true;
+                    responce.Message = "All notes are succesfully retrive";
+                    responce.Data= allNotes;
+                }
+                else
+                {
+                    responce.IsSuccess = true;
+                    responce.Message = "Operation of retrive notes are unsuccessfull!!";
+                }
+            }
+            catch (Exception ex)
+            {
+                responce.IsSuccess=false;
+                responce.Message= ex.Message;
+            }
+            return responce;
         }
     }
 }

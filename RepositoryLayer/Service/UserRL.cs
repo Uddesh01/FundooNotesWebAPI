@@ -56,7 +56,7 @@ namespace RepositoryLayer.Service
             }
             else
             {
-                throw new InvalidOperationException("User not found");
+                throw new InvalidOperationException("User not found or password is in correct");
             }
         }
 
@@ -64,6 +64,7 @@ namespace RepositoryLayer.Service
         {
             ValidateEmail(userEmail);
             ValidatePassword(newPassword);
+            string encriptedPassword = Convert.ToBase64String(Encoding.UTF8.GetBytes(newPassword));
             var user = dbContext.Users.SingleOrDefault(u => u.UserEmail == userEmail);
 
             if (user == null)
@@ -71,16 +72,13 @@ namespace RepositoryLayer.Service
                 throw new InvalidOperationException("User not found");
             }
 
-            user.UserPassword = newPassword;
+            user.UserPassword = encriptedPassword;
             user.UpdatedOn = DateTime.UtcNow;
 
             dbContext.SaveChanges();
 
             return true;
         }
-
-        [HttpPost("AddNote")]
-        [Authorize]
 
         private void ValidateEmail(string email)
         {
