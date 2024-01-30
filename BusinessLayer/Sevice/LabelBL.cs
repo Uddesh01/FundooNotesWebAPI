@@ -11,26 +11,33 @@ namespace BusinessLayer.Sevice
 {
     public class LabelBL : ILabelBL
     {
-        public readonly ILabelRL iLabelRL;
-        public IConfiguration configuration;
-        public LabelBL(ILabelRL labelRL, IConfiguration configuration)
+        private readonly ILabelRL iLabelRL;
+        public LabelBL(ILabelRL labelRL)
         {
-            this.iLabelRL = labelRL;
-            this.configuration = configuration;
+            iLabelRL = labelRL;
         }
         public bool AddLabelToNote(string label, long noteId, int userId)
         {
             return iLabelRL.AddLabelToNote(label, noteId,userId);
         }
 
-        bool ILabelBL.RemoveLabelFromNote(long labelId, long noteId, int userId)
+       public bool RemoveLabelFromNote(long labelId, long noteId, int userId)
         {
             return iLabelRL.RemoveLabelFromNote(labelId, noteId, userId);
         }
 
-        bool ILabelBL.UpdateLabelForNote(long labelId, string newLabel, long noteId, int userId)
+        public bool UpdateLabelForNote(long labelId, string newLabel, long noteId, int userId)
         {
             return iLabelRL.UpdateLabelForNote(labelId,newLabel,noteId,userId);
+        }
+
+        public bool RemoveLabel(long labelId, int userId)
+        {
+            return iLabelRL.RemoveLabel(labelId, userId);
+        }
+        public bool AddLabel(string label, int userId)
+        {
+            return iLabelRL.AddLabel(label, userId);
         }
     }
 }

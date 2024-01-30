@@ -13,8 +13,8 @@ namespace CommonLayer.Model
         public DateTime Reminder { get; set; }
         public string Color { get; set; }
         public string Image { get; set; }
-        public bool Archive { get; set; }
-        public bool Pin { get; set; }
-        public bool Trash { get; set; }
+        public bool Archive { get; set; }=false;
+        public bool Pin { get; set; } = false;
+        public bool Trash { get; set; } = false;
     }
 }

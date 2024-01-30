@@ -11,7 +11,7 @@ namespace FundooNotesAPI.Controllers
     [ApiController]
     public class NoteController : ControllerBase
     {
-        public readonly INoteBL inoteBL;
+        private readonly INoteBL inoteBL;
         public NoteController(INoteBL noteBL)
         {
             inoteBL = noteBL;

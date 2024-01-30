@@ -10,8 +10,9 @@ namespace RepositoryLayer.Entitys
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public long LabelID { get; set; }
         public string LabelName { get; set; }
-        [ForeignKey("Notes")]
-        public long NoteID { get; set; }
+        [ForeignKey("Users")]
+        public int UserId { get; set; }
+        [NotMapped]
         public ICollection<NoteLabelEntity> NoteLabels { get; set; }
 
     }

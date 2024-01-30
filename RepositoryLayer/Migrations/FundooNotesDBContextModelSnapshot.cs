@@ -34,8 +34,8 @@ namespace RepositoryLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<long>("NoteID")
-                        .HasColumnType("bigint");
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
 
                     b.HasKey("LabelID");
 
@@ -153,13 +153,13 @@ namespace RepositoryLayer.Migrations
             modelBuilder.Entity("RepositoryLayer.Entitys.NoteLabelEntity", b =>
                 {
                     b.HasOne("RepositoryLayer.Entitys.LabelEntity", "Label")
-                        .WithMany("NoteLabels")
+                        .WithMany()
                         .HasForeignKey("LabelID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("RepositoryLayer.Entitys.NoteEntity", "Note")
-                        .WithMany("NoteLabels")
+                        .WithMany()
                         .HasForeignKey("NoteID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -167,16 +167,6 @@ namespace RepositoryLayer.Migrations
                     b.Navigation("Label");
 
                     b.Navigation("Note");
-                });
-
-            modelBuilder.Entity("RepositoryLayer.Entitys.LabelEntity", b =>
-                {
-                    b.Navigation("NoteLabels");
-                });
-
-            modelBuilder.Entity("RepositoryLayer.Entitys.NoteEntity", b =>
-                {
-                    b.Navigation("NoteLabels");
                 });
 #pragma warning restore 612, 618
         }

@@ -7,12 +7,9 @@ using System.Security.Cryptography.Xml;
 public class LabelRL : ILabelRL
 {
     private readonly FundooNotesDBContext dbContext;
-    private readonly IConfiguration configuration;
-
-    public LabelRL(FundooNotesDBContext dbContext, IConfiguration configuration)
+    public LabelRL(FundooNotesDBContext dbContext)
     {
         this.dbContext = dbContext;
-        this.configuration = configuration;
     }
 
     public bool AddLabelToNote(string label, long noteId,int userId)
@@ -27,16 +24,11 @@ public class LabelRL : ILabelRL
                 labelEntity = new LabelEntity
                 {
                     LabelName = label,
-                    NoteID = noteId
+                    UserId = userId
                 };
 
                 dbContext.Lables.Add(labelEntity);
                 dbContext.SaveChanges();
-            }
-
-            if (dbContext.NoteLabels.Any(x => x.NoteID == noteId && x.LabelID == labelEntity.LabelID))
-            {
-                return true;
             }
 
             NoteLabelEntity noteLabel = new NoteLabelEntity
@@ -97,7 +89,7 @@ public class LabelRL : ILabelRL
                         newLabelEntity = new LabelEntity
                         {
                             LabelName = newLabel,
-                            NoteID = noteId
+                            UserId = userId
                         };
                         dbContext.Lables.Add(newLabelEntity);
                         dbContext.SaveChanges();
@@ -116,8 +108,32 @@ public class LabelRL : ILabelRL
                 }
             }
         }
-
         return false;
     }
 
+    public bool AddLabel(string label,int userId)
+    {
+        LabelEntity labelEntity = new LabelEntity
+        {
+            LabelName=label,
+            UserId=userId
+        };
+        dbContext.Lables.Add(labelEntity);
+        dbContext.SaveChanges();
+        return true;
+    }
+    public bool RemoveLabel(long labelId,int userId)
+    {
+        LabelEntity labelEntity = dbContext.Lables.FirstOrDefault(x => x.UserId==userId && x.LabelID==labelId);
+        if (labelEntity != null) 
+        {
+            dbContext.Lables.Remove(labelEntity);
+            dbContext.SaveChanges();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
 }

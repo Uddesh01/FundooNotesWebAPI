@@ -21,6 +21,7 @@ namespace RepositoryLayer.Entitys
         public DateTime Edited { get; set; }
         [ForeignKey("Users")]
         public int UserId { get; set; }
+        [NotMapped]
         public ICollection<NoteLabelEntity> NoteLabels { get; set; }
     }
 }

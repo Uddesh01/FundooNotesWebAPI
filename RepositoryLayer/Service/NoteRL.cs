@@ -1,5 +1,4 @@
 ﻿using CommonLayer.Model;
-using Microsoft.Extensions.Configuration;
 using RepositoryLayer.Entitys;
 using RepositoryLayer.Innterface;
 
@@ -7,8 +6,7 @@ namespace RepositoryLayer.Service
 {
     public class NoteRL : INoteRL
     {
-        public readonly FundooNotesDBContext dbContext;
-        public IConfiguration configuration;
+        private readonly FundooNotesDBContext dbContext;
         public NoteRL(FundooNotesDBContext dbContext)
         {
             this.dbContext = dbContext;
@@ -42,7 +40,7 @@ namespace RepositoryLayer.Service
             return true;
         }
 
-        bool INoteRL.Archive_UnArchive(int _userId, long noteId)
+        public bool Archive_UnArchive(int _userId, long noteId)
         {
             NoteEntity noteEntity = dbContext.Notes.Where(x => x.NoteID == noteId && x.UserId == _userId).FirstOrDefault();
             if (noteEntity != null)
@@ -64,7 +62,7 @@ namespace RepositoryLayer.Service
             return true;
         }
 
-        NoteEntity INoteRL.EditNote(EditNoteModel editNote, int _userId, long noteId)
+        public NoteEntity EditNote(EditNoteModel editNote, int _userId, long noteId)
         {
             NoteEntity noteEntity = dbContext.Notes.Where(x => x.NoteID == noteId && x.UserId == _userId).FirstOrDefault();
             noteEntity.Title = editNote.Titel;
@@ -74,7 +72,7 @@ namespace RepositoryLayer.Service
             return noteEntity;
         }
 
-        bool INoteRL.Pin_Unpin(int _userId, long noteId)
+        public bool Pin_Unpin(int _userId, long noteId)
         {
             NoteEntity noteEntity = dbContext.Notes.Where(x => x.NoteID == noteId && x.UserId == _userId).FirstOrDefault();
             if (noteEntity != null)
@@ -96,7 +94,7 @@ namespace RepositoryLayer.Service
             return true;
         }
 
-        bool INoteRL.Trash_UnTrash(int _userId, long noteId)
+        public bool Trash_UnTrash(int _userId, long noteId)
         {
             NoteEntity noteEntity = dbContext.Notes.Where(x => x.NoteID == noteId && x.UserId == _userId).FirstOrDefault();
             if (noteEntity != null)
