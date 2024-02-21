@@ -8,7 +8,5 @@ namespace RepositoryLayer.Innterface
         UserEntity Register(UserModel newUser);
         string Login(string userEmail, string userPassword);
         bool ResetPassword(string userEmail, string newPassword);
-
-       
     }
 }

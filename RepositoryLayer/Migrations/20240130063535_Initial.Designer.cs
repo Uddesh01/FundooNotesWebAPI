@@ -12,8 +12,8 @@ using RepositoryLayer;
 namespace RepositoryLayer.Migrations
 {
     [DbContext(typeof(FundooNotesDBContext))]
-    [Migration("20240123065008_Notes")]
-    partial class Notes
+    [Migration("20240130063535_Initial")]
+    partial class Initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,26 @@ namespace RepositoryLayer.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("RepositoryLayer.Entitys.LabelEntity", b =>
+                {
+                    b.Property<long>("LabelID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("LabelID"));
+
+                    b.Property<string>("LabelName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("LabelID");
+
+                    b.ToTable("Lables");
+                });
 
             modelBuilder.Entity("RepositoryLayer.Entitys.NoteEntity", b =>
                 {
@@ -72,9 +92,30 @@ namespace RepositoryLayer.Migrations
 
                     b.HasKey("NoteID");
 
-                    b.HasIndex("UserId");
-
                     b.ToTable("Notes");
+                });
+
+            modelBuilder.Entity("RepositoryLayer.Entitys.NoteLabelEntity", b =>
+                {
+                    b.Property<long>("LabelNoteID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("LabelNoteID"));
+
+                    b.Property<long>("LabelID")
+                        .HasColumnType("bigint");
+
+                    b.Property<long>("NoteID")
+                        .HasColumnType("bigint");
+
+                    b.HasKey("LabelNoteID");
+
+                    b.HasIndex("LabelID");
+
+                    b.HasIndex("NoteID");
+
+                    b.ToTable("NoteLabels");
                 });
 
             modelBuilder.Entity("RepositoryLayer.Entitys.UserEntity", b =>
@@ -112,15 +153,23 @@ namespace RepositoryLayer.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("RepositoryLayer.Entitys.NoteEntity", b =>
+            modelBuilder.Entity("RepositoryLayer.Entitys.NoteLabelEntity", b =>
                 {
-                    b.HasOne("RepositoryLayer.Entitys.UserEntity", "User")
+                    b.HasOne("RepositoryLayer.Entitys.LabelEntity", "Label")
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("LabelID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("User");
+                    b.HasOne("RepositoryLayer.Entitys.NoteEntity", "Note")
+                        .WithMany()
+                        .HasForeignKey("NoteID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Label");
+
+                    b.Navigation("Note");
                 });
 #pragma warning restore 612, 618
         }

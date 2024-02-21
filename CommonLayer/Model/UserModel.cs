@@ -7,5 +7,4 @@
         public string UserPassword { get; set; }
         public string UserContact { get; set; }
     }
-
 }

@@ -1,8 +1,12 @@
 {
   "version": 2,
+<<<<<<< HEAD
   "dgSpecHash": "vZyWe55vpl5LpIhrE2yulMgYb+T6bfbE0vvDTCJvOW9ja6wSvrIdLMPD5BuE5ph/lUW9G+dMU3eMYU/z85z7XQ==",
+=======
+  "dgSpecHash": "YlB4QymOt+OTHCudNJwaYZ5z1SKZSodVHB1aWk0rlIAwtB85Zhst2BCRtAYU0a/KcoAatXGvS6bussDFxccykw==",
+>>>>>>> 896f895f42d09d1f10c9f51804d233948b59fa77
   "success": true,
-  "projectFilePath": "C:\\WebAPI\\FundooNotesAPI\\RepositoryLayer\\RepositoryLayer.csproj",
+  "projectFilePath": "C:\\WebAPI\\FundooNotesWebAPI\\RepositoryLayer\\RepositoryLayer.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\azure.core\\1.25.0\\azure.core.1.25.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\azure.identity\\1.7.0\\azure.identity.1.7.0.nupkg.sha512",

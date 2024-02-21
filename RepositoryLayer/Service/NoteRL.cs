@@ -1,19 +1,22 @@
 ﻿using CommonLayer.Model;
+<<<<<<< HEAD
 using Microsoft.Extensions.Configuration;
 using RepositoryLayer.Entitys;
 using RepositoryLayer.Innterface;
 using System.Linq;
+=======
+using RepositoryLayer.Entitys;
+using RepositoryLayer.Innterface;
+>>>>>>> 896f895f42d09d1f10c9f51804d233948b59fa77
 
 namespace RepositoryLayer.Service
 {
     public class NoteRL : INoteRL
     {
-        public readonly FundooNotesDBContext dbContext;
-        public IConfiguration configuration;
-        public NoteRL(FundooNotesDBContext dbContext, IConfiguration configuration)
+        private readonly FundooNotesDBContext dbContext;
+        public NoteRL(FundooNotesDBContext dbContext)
         {
             this.dbContext = dbContext;
-            this.configuration = configuration;
         }
         public NoteEntity AddNote(AddNoteModel newNote, int _userId)
         {
@@ -44,7 +47,7 @@ namespace RepositoryLayer.Service
             return true;
         }
 
-        bool INoteRL.Archive_UnArchive(int _userId, long noteId)
+        public bool Archive_UnArchive(int _userId, long noteId)
         {
             NoteEntity noteEntity = dbContext.Notes.Where(x => x.NoteID == noteId && x.UserId == _userId).FirstOrDefault();
             if (noteEntity != null)
@@ -66,7 +69,7 @@ namespace RepositoryLayer.Service
             return true;
         }
 
-        NoteEntity INoteRL.EditNote(EditNoteModel editNote, int _userId, long noteId)
+        public NoteEntity EditNote(EditNoteModel editNote, int _userId, long noteId)
         {
             NoteEntity noteEntity = dbContext.Notes.Where(x => x.NoteID == noteId && x.UserId == _userId).FirstOrDefault();
             noteEntity.Title = editNote.Titel;
@@ -76,7 +79,7 @@ namespace RepositoryLayer.Service
             return noteEntity;
         }
 
-        bool INoteRL.Pin_Unpin(int _userId, long noteId)
+        public bool Pin_Unpin(int _userId, long noteId)
         {
             NoteEntity noteEntity = dbContext.Notes.Where(x => x.NoteID == noteId && x.UserId == _userId).FirstOrDefault();
             if (noteEntity != null)
@@ -98,7 +101,7 @@ namespace RepositoryLayer.Service
             return true;
         }
 
-        bool INoteRL.Trash_UnTrash(int _userId, long noteId)
+        public bool Trash_UnTrash(int _userId, long noteId)
         {
             NoteEntity noteEntity = dbContext.Notes.Where(x => x.NoteID == noteId && x.UserId == _userId).FirstOrDefault();
             if (noteEntity != null)
@@ -120,7 +123,11 @@ namespace RepositoryLayer.Service
             return true;
         }
 
+<<<<<<< HEAD
         bool INoteRL.ChangeColor(int _userId, long noteId, string color)
+=======
+        public bool ChangeColor(int _userId, long noteId, string color)
+>>>>>>> 896f895f42d09d1f10c9f51804d233948b59fa77
         {
             NoteEntity noteEntity = dbContext.Notes.Where(x => x.NoteID == noteId && x.UserId == _userId).FirstOrDefault();
             if (noteEntity != null)
@@ -135,7 +142,7 @@ namespace RepositoryLayer.Service
             return true;
         }
 
-        IEnumerable<NoteEntity> INoteRL.GetAllNotes(int _userId)
+        public IEnumerable<NoteEntity> GetAllNotes(int _userId)
         {
             IEnumerable<NoteEntity> allNotes = dbContext.Notes.Where(x => x.UserId == _userId);
             if (allNotes.Any())
@@ -147,6 +154,18 @@ namespace RepositoryLayer.Service
                 throw new Exception("User or notes are not found!!");
             }
 
+<<<<<<< HEAD
+=======
+        }
+
+        public IEnumerable<NoteEntity> GetAllNotesByLabelName(long labelId, int userId)
+        {
+            var allNotes = from nl in dbContext.NoteLabels
+                           join n in dbContext.Notes on nl.NoteID equals n.NoteID
+                           where nl.LabelID == labelId && n.UserId == userId
+                           select n;
+            return allNotes;
+>>>>>>> 896f895f42d09d1f10c9f51804d233948b59fa77
         }
 
     }

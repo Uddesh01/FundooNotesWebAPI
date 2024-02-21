@@ -10,7 +10,7 @@ namespace RepositoryLayer.Entitys
         public string UserContact { get; set; }
         public string UserEmail { get; set; }
         public string UserPassword { get; set; }
-        public DateTime AddedOn { get; set; }
+        public DateTime AddedOn { get; set; }    
         public DateTime UpdatedOn { get; set; }
     }
 }

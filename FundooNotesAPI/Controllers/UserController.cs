@@ -16,13 +16,11 @@ namespace FundooNotesAPI.Controllers
 
     public class UserController : ControllerBase
     {
-        public readonly IUserBL iuserBL;
-        public IConfiguration configuration;
-
-        public UserController(IUserBL userBL, IConfiguration configuration)
+        private readonly IUserBL iuserBL;
+     
+        public UserController(IUserBL userBL)
         {
             iuserBL = userBL;
-            this.configuration = configuration;
         }
 
         [HttpPost("Register")]
