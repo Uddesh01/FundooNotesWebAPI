@@ -16,7 +16,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen(c => {
+builder.Services.AddSwaggerGen(c =>
+{
     c.SwaggerDoc("v1", new OpenApiInfo
     {
         Title = "JWTToken_Auth_API",
@@ -73,10 +74,12 @@ builder.Services.AddTransient<IUserRL, UserRL>();
 builder.Services.AddTransient<IUserBL, UserBL>();
 builder.Services.AddTransient<INoteRL, NoteRL>();
 builder.Services.AddTransient<INoteBL, NoteBL>();
+builder.Services.AddTransient<ILabelRL, LabelRL>();
+builder.Services.AddTransient<ILabelBL, LabelBL>();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline. 
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

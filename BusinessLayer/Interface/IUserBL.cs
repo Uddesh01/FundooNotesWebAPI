@@ -9,5 +9,7 @@ namespace BusinessLayer.Interface
         string Login(string userEmail, string userPassword);
         bool ResetPassword(string userEmail, string newPassword);
 
+
+
     }
 }
