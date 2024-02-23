@@ -2,8 +2,11 @@
 using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Distributed;
+using Newtonsoft.Json;
 using RepositoryLayer.Entitys;
 using System.Security.Claims;
+using System.Text;
 
 namespace FundooNotesAPI.Controllers
 {
@@ -12,9 +15,11 @@ namespace FundooNotesAPI.Controllers
     public class NoteController : ControllerBase
     {
         private readonly INoteBL inoteBL;
-        public NoteController(INoteBL noteBL)
+        private readonly IDistributedCache distributedCache;
+        public NoteController(INoteBL noteBL, IDistributedCache distributedCache)
         {
             inoteBL = noteBL;
+            this.distributedCache = distributedCache;
         }
 
         [HttpPost("AddNote")]
@@ -234,9 +239,9 @@ namespace FundooNotesAPI.Controllers
                 IEnumerable<NoteEntity> allNotes = inoteBL.GetAllNotes(userId);
                 if (allNotes != null)
                 {
-                    responce.IsSuccess=true;
+                    responce.IsSuccess = true;
                     responce.Message = "All notes are retrive successfully!!";
-                    responce.Data=allNotes;
+                    responce.Data = allNotes;
                 }
                 else
                 {
@@ -246,11 +251,64 @@ namespace FundooNotesAPI.Controllers
             }
             catch (Exception ex)
             {
-               responce.IsSuccess=false;
+                responce.IsSuccess = false;
                 responce.Message = ex.Message;
             }
             return responce;
         }
+
+        [HttpGet("GetAllNotesUsingRedis")]
+        [Authorize]
+        public async Task<IActionResult> GetAllNotesUsingRedis()
+        {
+            int userId = Convert.ToInt32(User.FindFirstValue("UserId"));
+            var response = new ResponceModel<IEnumerable<NoteEntity>>();
+            try
+            {
+                var cacheKey = $"NotesList_{userId}";
+                var cachedNotes = await distributedCache.GetAsync(cacheKey);
+
+                if (cachedNotes != null)
+                {
+                    var serializedNotes = Encoding.UTF8.GetString(cachedNotes);
+                    var notes = JsonConvert.DeserializeObject<List<NoteEntity>>(serializedNotes);
+                    response.IsSuccess = true;
+                    response.Message = "All notes are successfully retrieved from cache";
+                    response.Data = notes;
+                }
+                else
+                {
+                    IEnumerable<NoteEntity> allNotes = inoteBL.GetAllNotesUsingRedis(userId);
+                    if (allNotes != null)
+                    {
+                        var serializedNotes = JsonConvert.SerializeObject(allNotes);
+                        var bytes = Encoding.UTF8.GetBytes(serializedNotes);
+                        var options = new DistributedCacheEntryOptions()
+                            .SetAbsoluteExpiration(DateTimeOffset.Now.AddMinutes(1))
+                            .SetSlidingExpiration(TimeSpan.FromMinutes(1));
+                        await distributedCache.SetAsync(cacheKey, bytes, options);
+
+                        response.IsSuccess = true;
+                        response.Message = "All notes are successfully retrieved";
+                        response.Data = allNotes;
+                    }
+                    else
+                    {
+                        response.IsSuccess = true;
+                        response.Message = "Operation of retrieve notes was unsuccessful";
+                    }
+                }
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = $"An error occurred: {ex.Message}";
+                return StatusCode(500, response);
+            }
+        }
+
 
         [HttpGet("GetAllNotesByLabelId")]
         [Authorize]

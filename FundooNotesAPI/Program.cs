@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RabbitMQ.Client;
 using RepositoryLayer;
 using RepositoryLayer.Innterface;
 using RepositoryLayer.Service;
@@ -11,7 +12,21 @@ using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+builder.Services.AddStackExchangeRedisCache(redisOptions =>
+{
+    string connection = builder.Configuration.GetConnectionString("Redis");
+    redisOptions.Configuration = connection;
+
+});
+
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowOrigin",
+        builder => builder.WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod());
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -20,7 +35,7 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo
     {
-        Title = "JWTToken_Auth_API",
+        Title = "FundooNotes_WebAPI",
         Version = "v1"
     });
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
@@ -74,22 +89,17 @@ builder.Services.AddTransient<IUserRL, UserRL>();
 builder.Services.AddTransient<IUserBL, UserBL>();
 builder.Services.AddTransient<INoteRL, NoteRL>();
 builder.Services.AddTransient<INoteBL, NoteBL>();
-<<<<<<< HEAD
 builder.Services.AddTransient<ILabelRL, LabelRL>();
-=======
-builder.Services.AddTransient <ILabelRL, LabelRL>();
->>>>>>> 896f895f42d09d1f10c9f51804d233948b59fa77
 builder.Services.AddTransient<ILabelBL, LabelBL>();
 
 var app = builder.Build();
-
-// Configure the HTTP request pipeline. 
+// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
+app.UseCors("AllowOrigin");//crossserver
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

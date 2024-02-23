@@ -1,4 +1,3 @@
-C:\WebAPI\FundooNotesAPI\FundooNotesAPI\bin\Debug\net8.0\appsettings.Development.json
 C:\WebAPI\FundooNotesAPI\FundooNotesAPI\bin\Debug\net8.0\appsettings.json
 C:\WebAPI\FundooNotesAPI\FundooNotesAPI\bin\Debug\net8.0\FundooNotesAPI.exe
 C:\WebAPI\FundooNotesAPI\FundooNotesAPI\bin\Debug\net8.0\FundooNotesAPI.deps.json
@@ -285,3 +284,9 @@ C:\WebAPI\FundooNotesWebAPI\FundooNotesAPI\obj\Debug\net8.0\refint\FundooNotesAP
 C:\WebAPI\FundooNotesWebAPI\FundooNotesAPI\obj\Debug\net8.0\FundooNotesAPI.pdb
 C:\WebAPI\FundooNotesWebAPI\FundooNotesAPI\obj\Debug\net8.0\FundooNotesAPI.genruntimeconfig.cache
 C:\WebAPI\FundooNotesWebAPI\FundooNotesAPI\obj\Debug\net8.0\ref\FundooNotesAPI.dll
+C:\WebAPI\FundooNotesAPI\FundooNotesAPI\bin\Debug\net8.0\RabbitMQ.Client.dll
+C:\WebAPI\FundooNotesAPI\FundooNotesAPI\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\WebAPI\FundooNotesAPI\FundooNotesAPI\bin\Debug\net8.0\Microsoft.Extensions.Caching.StackExchangeRedis.dll
+C:\WebAPI\FundooNotesAPI\FundooNotesAPI\bin\Debug\net8.0\Microsoft.Extensions.Options.dll
+C:\WebAPI\FundooNotesAPI\FundooNotesAPI\bin\Debug\net8.0\Pipelines.Sockets.Unofficial.dll
+C:\WebAPI\FundooNotesAPI\FundooNotesAPI\bin\Debug\net8.0\StackExchange.Redis.dll

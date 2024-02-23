@@ -1,13 +1,11 @@
 ﻿using CommonLayer.Model;
-<<<<<<< HEAD
 using Microsoft.Extensions.Configuration;
 using RepositoryLayer.Entitys;
 using RepositoryLayer.Innterface;
 using System.Linq;
-=======
 using RepositoryLayer.Entitys;
 using RepositoryLayer.Innterface;
->>>>>>> 896f895f42d09d1f10c9f51804d233948b59fa77
+
 
 namespace RepositoryLayer.Service
 {
@@ -122,12 +120,8 @@ namespace RepositoryLayer.Service
             dbContext.SaveChanges();
             return true;
         }
-
-<<<<<<< HEAD
-        bool INoteRL.ChangeColor(int _userId, long noteId, string color)
-=======
         public bool ChangeColor(int _userId, long noteId, string color)
->>>>>>> 896f895f42d09d1f10c9f51804d233948b59fa77
+
         {
             NoteEntity noteEntity = dbContext.Notes.Where(x => x.NoteID == noteId && x.UserId == _userId).FirstOrDefault();
             if (noteEntity != null)
@@ -145,7 +139,7 @@ namespace RepositoryLayer.Service
         public IEnumerable<NoteEntity> GetAllNotes(int _userId)
         {
             IEnumerable<NoteEntity> allNotes = dbContext.Notes.Where(x => x.UserId == _userId);
-            if (allNotes.Any())
+            if (allNotes != null)
             {
                 return allNotes;
             }
@@ -154,8 +148,20 @@ namespace RepositoryLayer.Service
                 throw new Exception("User or notes are not found!!");
             }
 
-<<<<<<< HEAD
-=======
+        }
+
+        public IEnumerable<NoteEntity> GetAllNotesUsingRedis(int _userId)
+        {
+            IEnumerable<NoteEntity> allNotes = dbContext.Notes.Where(x => x.UserId == _userId);
+            if (allNotes.Any())
+            {
+                Console.WriteLine("I am here");
+                return allNotes;
+            }
+            else
+            {
+                throw new Exception("User or notes are not found!!");
+            }
         }
 
         public IEnumerable<NoteEntity> GetAllNotesByLabelName(long labelId, int userId)
@@ -165,7 +171,7 @@ namespace RepositoryLayer.Service
                            where nl.LabelID == labelId && n.UserId == userId
                            select n;
             return allNotes;
->>>>>>> 896f895f42d09d1f10c9f51804d233948b59fa77
+
         }
 
     }

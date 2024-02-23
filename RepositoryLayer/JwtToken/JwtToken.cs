@@ -26,7 +26,7 @@ namespace RepositoryLayer.JwtToke
             var token = new JwtSecurityToken(configuration["Jwt:Issuer"],
                 configuration["Jwt:Audience"],
                 claims,
-                expires: DateTime.Now.AddMinutes(60),
+                expires: DateTime.Now.AddMinutes(1440),
                 signingCredentials: credentials);
 
             return new JwtSecurityTokenHandler().WriteToken(token);

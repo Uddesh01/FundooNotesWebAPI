@@ -14,6 +14,7 @@ namespace RepositoryLayer.Innterface
         bool Trash_UnTrash(int _userId, long noteId);
         bool ChangeColor(int _userId, long noteId, string color);
         IEnumerable<NoteEntity> GetAllNotes(int _userId);
+        IEnumerable<NoteEntity> GetAllNotesUsingRedis(int _userId);
         IEnumerable<NoteEntity> GetAllNotesByLabelName(long labelId, int userId);
     }
 }

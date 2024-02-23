@@ -2,102 +2,153 @@
 using CommonLayer.Model;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 using System.Security.Claims;
 
 namespace FundooNotesAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LableController : ControllerBase
+    public class LabelController : ControllerBase
     {
-        public readonly ILabelBL ilabelBL;
-        public IConfiguration configuration;
-        public LableController(ILabelBL labelBL, IConfiguration configuration)
+        private readonly ILabelBL iLabelBL;
+        public LabelController(ILabelBL labelBL)
         {
-
-            ilabelBL = labelBL;
-            this.configuration = configuration;
+            iLabelBL = labelBL;
         }
 
+        [HttpPost("AddLabelToNote")]
+        [Authorize]
+        public ResponceModel<string> AddLabelToNote(string label, long noteId)
+        {
+            ResponceModel<string> responce = new ResponceModel<string>();
+            int userId = Convert.ToInt32(User.FindFirstValue("UserId"));
+            try
+            {
+                bool isSuccessfull = iLabelBL.AddLabelToNote(label, noteId, userId);
+                if (isSuccessfull)
+                {
+                    responce.Message = "Label added successfully!!";
+                    responce.IsSuccess = true;
+                }
+                else
+                {
+                    responce.Message = "Error while adding label!!";
+                    responce.IsSuccess = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                responce.Message = ex.Message;
+                responce.IsSuccess = false;
+            }
+            return responce;
+        }
+
+        [HttpPost("RemoveLabelFromNote")]
+        [Authorize]
+        public ResponceModel<string> RemoveLabelFromNote(long labelId, long noteId)
+        {
+            ResponceModel<string> responce = new ResponceModel<string>();
+            int userId = Convert.ToInt32(User.FindFirstValue("UserId"));
+            try
+            {
+                bool isSuccessfull = iLabelBL.RemoveLabelFromNote(labelId, noteId, userId);
+                if (isSuccessfull)
+                {
+                    responce.Message = "Label removed successfully!!";
+                    responce.IsSuccess = true;
+                }
+                else
+                {
+                    responce.Message = "Error while removing label!!";
+                    responce.IsSuccess = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                responce.Message = ex.Message;
+                responce.IsSuccess = false;
+            }
+            return responce;
+        }
+        [HttpPost("UpdateLabelForNote")]
+        [Authorize]
+        public ResponceModel<string> UpdateLabelForNote(long labelId, string newLabel, long noteId)
+        {
+            ResponceModel<string> responce = new ResponceModel<string>();
+            int userId = Convert.ToInt32(User.FindFirstValue("UserId"));
+            try
+            {
+                bool isSuccessfull = iLabelBL.UpdateLabelForNote(labelId, newLabel, noteId, userId);
+                if (isSuccessfull)
+                {
+                    responce.Message = "Label updated successfully!!";
+                    responce.IsSuccess = true;
+                }
+                else
+                {
+                    responce.Message = "Error while updating label!!";
+                    responce.IsSuccess = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                responce.Message = ex.Message;
+                responce.IsSuccess = false;
+            }
+            return responce;
+        }
         [HttpPost("AddLabel")]
         [Authorize]
-        public ResponceModel<string> AddLabel(long noteId, string label)
+        public ResponceModel<string> AddLabel(string label)
         {
-            ResponceModel<string> responce = new ResponceModel<string>();
             int userId = Convert.ToInt32(User.FindFirstValue("UserId"));
+            ResponceModel<string> responce = new ResponceModel<string>();
             try
             {
-                bool isSuccessfull = ilabelBL.AddLabel(noteId, userId, label);
-                if (isSuccessfull)
+                bool isSuccess = iLabelBL.AddLabel(label, userId);
+                if (isSuccess)
                 {
-                    responce.IsSuccess = true;
-                    responce.Message = "Label added successfully!!";
+                    responce.Message = "Label is added successfully!!";
                 }
                 else
                 {
-                    responce.Message = "Label is not added!!";
                     responce.IsSuccess = false;
+                    responce.Message = "label is not added!!";
                 }
             }
             catch (Exception ex)
             {
-                responce.IsSuccess = false;
                 responce.Message = ex.Message;
+                responce.IsSuccess = false;
             }
             return responce;
         }
-        [HttpPut("UpdateLabel")]
+
+        [HttpPost("RemoveLabel")]
         [Authorize]
-        public ResponceModel<string> UpdateLabel(long noteId, string newLabel,long labelId)
+
+        public ResponceModel<string> RemoveLabel(long labelId)
         {
-            ResponceModel<string> responce = new ResponceModel<string>();
             int userId = Convert.ToInt32(User.FindFirstValue("UserId"));
-            try
-            {
-                bool isSuccessfull = ilabelBL.UpdateLabel(noteId, userId, newLabel,labelId);
-                if (isSuccessfull)
-                {
-                    responce.IsSuccess = true;
-                    responce.Message = "Label updated successfully!!";
-                }
-                else
-                {
-                    responce.Message = "Label is not updated!!";
-                    responce.IsSuccess = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                responce.IsSuccess = false;
-                responce.Message = ex.Message;
-            }
-            return responce;
-        }
-        [HttpDelete("RemoveLabel")]
-        [Authorize]
-        public ResponceModel<string> RemoveLabel(long noteId,long labelId)
-        {
-            int userId = Convert.ToInt32(User.FindFirstValue("UserID"));
             ResponceModel<string> responce = new ResponceModel<string>();
             try
             {
-                bool isSuccessfull = ilabelBL.RemoveLabel(noteId, userId,labelId);
-                if (isSuccessfull)
+                bool isSuccess = iLabelBL.RemoveLabel(labelId, userId);
+                if (isSuccess)
                 {
-                    responce.IsSuccess = true;
-                    responce.Message = "Label removed successfully!!";
+                    responce.Message = "Label is removed successfully!!";
                 }
                 else
                 {
                     responce.IsSuccess = false;
-                    responce.Message = "Label is not removed!!";
+                    responce.Message = "label is not removed!!";
                 }
             }
             catch (Exception ex)
             {
-                responce.IsSuccess = false;
                 responce.Message = ex.Message;
+                responce.IsSuccess = false;
             }
             return responce;
         }

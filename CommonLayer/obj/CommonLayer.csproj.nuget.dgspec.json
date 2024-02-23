@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\WebAPI\\FundooNotesWebAPI\\CommonLayer\\CommonLayer.csproj": {}
+    "C:\\WebAPI\\FundooNotesAPI\\CommonLayer\\CommonLayer.csproj": {}
   },
   "projects": {
-    "C:\\WebAPI\\FundooNotesWebAPI\\CommonLayer\\CommonLayer.csproj": {
+    "C:\\WebAPI\\FundooNotesAPI\\CommonLayer\\CommonLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\WebAPI\\FundooNotesWebAPI\\CommonLayer\\CommonLayer.csproj",
+        "projectUniqueName": "C:\\WebAPI\\FundooNotesAPI\\CommonLayer\\CommonLayer.csproj",
         "projectName": "CommonLayer",
-        "projectPath": "C:\\WebAPI\\FundooNotesWebAPI\\CommonLayer\\CommonLayer.csproj",
+        "projectPath": "C:\\WebAPI\\FundooNotesAPI\\CommonLayer\\CommonLayer.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "C:\\WebAPI\\FundooNotesWebAPI\\CommonLayer\\obj\\",
+        "outputPath": "C:\\WebAPI\\FundooNotesAPI\\CommonLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -58,9 +58,17 @@
               "target": "Package",
               "version": "[8.0.1, )"
             },
+            "Microsoft.Extensions.Caching.StackExchangeRedis": {
+              "target": "Package",
+              "version": "[8.0.2, )"
+            },
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",
               "version": "[7.2.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
             },
             "RabbitMQ.Client": {
               "target": "Package",

@@ -51,6 +51,10 @@ namespace BusinessLayer.Sevice
         {
             return inoteRL.GetAllNotes(_userId);
         }
+        IEnumerable<NoteEntity> INoteBL.GetAllNotesUsingRedis(int _userId)
+        {
+            return inoteRL.GetAllNotesUsingRedis(_userId);
+        }
         public IEnumerable<NoteEntity> GetAllNotesByLabelName(long labelId, int userId)
         {
             return inoteRL.GetAllNotesByLabelName(labelId, userId);
